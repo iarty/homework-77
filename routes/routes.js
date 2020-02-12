@@ -33,7 +33,7 @@ router.post("/newThread", upload.single("image"), (req, res) => {
     JSON.stringify({ id: nanoid(), ...req.body, date }),
     err => {
       if (err) {
-       return  res.status(400).json({ message: err });
+        return res.status(400).json({ message: err });
       }
     }
   );
@@ -43,10 +43,13 @@ router.post("/newThread", upload.single("image"), (req, res) => {
 router.get("/threads", (req, res) => {
   const path = "./DB/";
   fs.readdir(path, async (err, files) => {
-    const threads = files.map(fileName =>
-      JSON.parse(fs.readFileSync(path + fileName))
-    );
-    return res.status(200).json(threads);
+    if (files) {
+      const threads = files.map(fileName =>
+        JSON.parse(fs.readFileSync(path + fileName))
+      );
+      return res.status(200).json(threads);
+    }
+    return res.status(200).json([]);
   });
 });
 
