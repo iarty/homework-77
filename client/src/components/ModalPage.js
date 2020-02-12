@@ -18,7 +18,7 @@ const ModalPage = ({ show, onClick }) => {
     await dispatch(postThread(threadData));
     setThreadData({ author: "", comment: "", image: {} });
 
-    if (error) {
+    if (!error) {
       dispatch(getThreads());
     }
 
